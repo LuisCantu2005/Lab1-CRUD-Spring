@@ -1,65 +1,47 @@
 package com.springboot.MyTodoList.service;
 
+import com.springboot.MyTodoList.controller.GlobalExceptionHandler.ResourceNotFoundException;
 import com.springboot.MyTodoList.model.User;
 import com.springboot.MyTodoList.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<User> findAll(){
-        List<User> users = userRepository.findAll();
-        return users;
+        return userRepository.findAll();
     }
 
-    public ResponseEntity<User> getUserById(int id){
-        Optional<User> userById = userRepository.findById(id);
-        if (userById.isPresent()){
-            return new ResponseEntity<>(userById.get(), HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public User getUserById(int id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User con id " + id + " no encontrado"));
     }
-
 
     public User addUser(User newUser){
         return userRepository.save(newUser);
     }
 
-    public User test(){
-        User newUser = new User(88,"someNumber","pwd");
-
-        return userRepository.save(newUser);
-    }
-
-    public boolean deleteUser(int id){
-        try{
-            userRepository.deleteById(id);
-            return true;
-        }catch(Exception e){
-            return false;
+    public void deleteUser(int id){
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("User con id " + id + " no encontrado");
         }
+        userRepository.deleteById(id);
     }
+
     public User updateUser(int id, User user2update){
-        Optional<User> dbUser = userRepository.findById(id);
-        if(dbUser.isPresent()){
-            User user = dbUser.get();
-            user.setID(id);
-            user.setPhoneNumber(user2update.getPhoneNumber());
-            user.setUserPassword(user2update.getUserPassword());
-            return userRepository.save(user);
-        }else{
-            return null;
-        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User con id " + id + " no encontrado"));
+        user.setPhoneNumber(user2update.getPhoneNumber());
+        user.setUserPassword(user2update.getUserPassword());
+        return userRepository.save(user);
     }
 
 }

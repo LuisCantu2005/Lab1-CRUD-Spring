@@ -1,3 +1,16 @@
 **/node_modules/**
 **/build/**
 **/target/**
+**/logs.log
+
+# Wallet Oracle (no versionar credenciales de DB)
+# backend/wallet/
+
+# Variables de entorno locales
+.env
+*.env
+
+# IDE
+.idea/
+*.iml
+.vscode/

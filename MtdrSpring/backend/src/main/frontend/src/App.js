@@ -53,7 +53,7 @@ function App() {
       })
       .then(
         (result) => {
-          const remainingItems = items.filter(item => item.id !== deleteId);
+          const remainingItems = items.filter(item => item.id !== parseInt(deleteId));
           setItems(remainingItems);
         },
         (error) => {
@@ -172,8 +172,8 @@ function App() {
         }
       }).then(
         (result) => {
-          var id = result.headers.get('location');
-          var newItem = {"id": id, "description": text}
+          var id = parseInt(result.headers.get('location'));
+          var newItem = {"id": id, "description": text, "done": false, "creation_ts": new Date().toISOString()}
           setItems([newItem, ...items]);
           setInserting(false);
         },
@@ -202,7 +202,7 @@ function App() {
             <tr key={item.id}>
               <td className="description">{item.description}</td>
               { /*<td>{JSON.stringify(item, null, 2) }</td>*/ }
-              <td className="date"><Moment format="MMM Do hh:mm:ss">{item.createdAt}</Moment></td>
+              <td className="date"><Moment format="MMM Do hh:mm:ss">{item.creation_ts}</Moment></td>
               <td><Button variant="contained" className="DoneButton" onClick={(event) => toggleDone(event, item.id, item.description, !item.done)} size="small">
                     Done
                   </Button></td>
@@ -220,7 +220,7 @@ function App() {
 
             <tr key={item.id}>
               <td className="description">{item.description}</td>
-              <td className="date"><Moment format="MMM Do hh:mm:ss">{item.createdAt}</Moment></td>
+              <td className="date"><Moment format="MMM Do hh:mm:ss">{item.creation_ts}</Moment></td>
               <td><Button variant="contained" className="DoneButton" onClick={(event) => toggleDone(event, item.id, item.description, !item.done)} size="small">
                     Undo
                   </Button></td>

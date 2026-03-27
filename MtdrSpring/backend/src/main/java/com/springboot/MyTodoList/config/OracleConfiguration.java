@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 
@@ -21,12 +22,18 @@ import java.sql.SQLException;
 //
 //
 @Configuration
+@Profile("oracle")
 public class OracleConfiguration {
-    Logger logger = LoggerFactory.getLogger(DbSettings.class);
-    @Autowired
-    private DbSettings dbSettings;
-    @Autowired
-    private Environment env;
+    private static final Logger logger = LoggerFactory.getLogger(OracleConfiguration.class);
+
+    private final DbSettings dbSettings;
+    private final Environment env;
+
+    public OracleConfiguration(DbSettings dbSettings, Environment env) {
+        this.dbSettings = dbSettings;
+        this.env = env;
+    }
+
     @Bean
     public DataSource dataSource() throws SQLException{
         OracleDataSource ds = new OracleDataSource();
@@ -37,14 +44,6 @@ public class OracleConfiguration {
         ds.setUser(env.getProperty("db_user"));
         logger.info("Using Username " + env.getProperty("db_user"));
         ds.setPassword(env.getProperty("dbpassword"));
-//        For local testing
-//        ds.setDriverType(dbSettings.getDriver_class_name());
-//        logger.info("Using Driver " + dbSettings.getDriver_class_name());
-//        ds.setURL(dbSettings.getUrl());
-//        logger.info("Using URL: " + dbSettings.getUrl());
-//        ds.setUser(dbSettings.getUsername());
-//        logger.info("Using Username: " + dbSettings.getUsername());
-//        ds.setPassword(dbSettings.getPassword());
         return ds;
     }
 }

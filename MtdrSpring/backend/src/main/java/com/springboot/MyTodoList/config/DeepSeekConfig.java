@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DeepSeekConfig {
     
-    @Value("${deepseek.api.key}")
+    @Value("${deepseek.api.key:disabled}")
     private String apiKey;
 
     @Bean
@@ -19,7 +19,7 @@ public class DeepSeekConfig {
     }
 
     @Bean
-    public HttpPost deepSeekRequest(@Value("${deepseek.api.url}") String apiUrl) {
+    public HttpPost deepSeekRequest(@Value("${deepseek.api.url:https://api.deepseek.com/v1/chat/completions}") String apiUrl) {
         HttpPost request = new HttpPost(apiUrl);
         request.addHeader("Content-Type", "application/json");
         request.addHeader("Authorization", "Bearer " + apiKey);

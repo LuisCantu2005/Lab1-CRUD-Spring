@@ -1,6 +1,7 @@
 package com.springboot.MyTodoList.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 /*
@@ -21,12 +22,13 @@ import jakarta.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     int ID;
 
     @Column(name = "PHONENUMBER")
     String phonenumber;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "USERPASSWORD")
     String userpassword;
 
     public User(){}

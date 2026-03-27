@@ -1,0 +1,139 @@
+### MyTodoList — CRUD HTTP Requests
+### Usar con extensión "REST Client" de VS Code (humao.rest-client)
+
+@baseUrl = http://localhost:8080
+
+### ============================================================
+### ToDoItem CRUD
+### ============================================================
+
+### 1. Listar todas las tareas
+GET {{baseUrl}}/api/todos
+Accept: application/json
+
+###
+
+### 2. Obtener tarea por ID
+GET {{baseUrl}}/api/todos/1
+Accept: application/json
+
+###
+
+### 3. Crear nueva tarea
+POST {{baseUrl}}/api/todos
+Content-Type: application/json
+
+{
+  "description": "Nueva tarea desde VS Code",
+  "done": false
+}
+
+###
+
+### 4. Actualizar tarea (cambiar ID según necesidad)
+PUT {{baseUrl}}/api/todos/1
+Content-Type: application/json
+
+{
+  "description": "Tarea actualizada desde VS Code",
+  "done": true
+}
+
+###
+
+### 5. Eliminar tarea
+DELETE {{baseUrl}}/api/todos/1
+
+###
+
+### 6. Probar 404 - ID inexistente
+GET {{baseUrl}}/api/todos/99999
+Accept: application/json
+
+###
+
+### 7. Probar validación - descripción vacía (400)
+POST {{baseUrl}}/api/todos
+Content-Type: application/json
+
+{
+  "description": "",
+  "done": false
+}
+
+### ============================================================
+### User CRUD
+### ============================================================
+
+###
+
+### 8. Listar usuarios
+GET {{baseUrl}}/api/users
+Accept: application/json
+
+###
+
+### 9. Crear usuario
+POST {{baseUrl}}/api/users
+Content-Type: application/json
+
+{
+  "phoneNumber": "5512345678",
+  "userPassword": "miPassword123"
+}
+
+###
+
+### 10. Obtener usuario por ID
+GET {{baseUrl}}/api/users/1
+Accept: application/json
+
+###
+
+### 11. Actualizar usuario
+PUT {{baseUrl}}/api/users/1
+Content-Type: application/json
+
+{
+  "phoneNumber": "5587654321",
+  "userPassword": "nuevoPassword456"
+}
+
+###
+
+### 12. Eliminar usuario
+DELETE {{baseUrl}}/api/users/1
+
+### ============================================================
+### Legacy endpoints (backward compatibility)
+### ============================================================
+
+###
+
+### Listar tareas (legacy)
+GET {{baseUrl}}/todolist
+
+###
+
+### Crear tarea (legacy)
+POST {{baseUrl}}/todolist
+Content-Type: application/json
+
+{
+  "description": "Tarea legacy"
+}
+
+### ============================================================
+### Utilidades
+### ============================================================
+
+###
+
+### Swagger UI
+# Abrir en navegador: http://localhost:8080/swagger-ui.html
+
+### H2 Console
+# Abrir en navegador: http://localhost:8080/h2-console
+# JDBC URL: jdbc:h2:mem:todolistdb
+# User: sa
+# Password: (vacío)

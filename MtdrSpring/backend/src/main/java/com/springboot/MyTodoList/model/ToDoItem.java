@@ -1,6 +1,7 @@
 package com.springboot.MyTodoList.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
@@ -13,10 +14,12 @@ import java.time.OffsetDateTime;
 public class ToDoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     int ID;
     @Column(name = "DESCRIPTION")
     String description;
     @Column(name = "CREATION_TS")
+    @JsonProperty("creation_ts")
     OffsetDateTime creation_ts;
     @Column(name = "done")
     boolean done;

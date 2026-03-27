@@ -7,12 +7,23 @@ WORKDIR /tmp/
 EXPOSE 8080
 COPY target/MyTodoList-0.0.1-SNAPSHOT.jar MyTodoList.jar
 
+# Credenciales UI (sobreescribir en docker run con -e)
 ENV ui_username="admin"
-ENV ui_password="none0001"
+ENV ui_password="changeme"
 
-ENV db_user="AORUIZ"
-ENV dbpassword="None00010001"
-ENV db_url="jdbc:oracle:thin:@aoruizatp_tp?TNS_ADMIN=/mtdrworkshop/creds"
+# DB Oracle (sobreescribir con variables de entorno reales)
+ENV db_user=""
+ENV dbpassword=""
+ENV db_url=""
 ENV driver_class_name="oracle.jdbc.OracleDriver"
+
+# Perfil Spring Boot (usar 'local' para H2 o 'oracle' para Oracle DB)
+ENV SPRING_PROFILES_ACTIVE="local"
+
+# Telegram y DeepSeek desactivados por defecto
+ENV TELEGRAM_BOT_ENABLED="false"
+ENV TELEGRAM_BOT_TOKEN="disabled"
+ENV TELEGRAM_BOT_NAME="disabled"
+ENV DEEPSEEK_API_KEY="disabled"
 
 ENTRYPOINT ["java","-jar","MyTodoList.jar"]

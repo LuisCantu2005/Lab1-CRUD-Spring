@@ -6,8 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration {
@@ -16,11 +14,12 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Permitir todo sin autenticación
+                .anyRequest().permitAll()
             )
-            .csrf(csrf -> csrf.disable()) // Desactivar CSRF si no usas formularios
-            .httpBasic(httpBasic -> httpBasic.disable()) // Desactivar autenticación básica
-            .formLogin(formLogin -> formLogin.disable()); // Desactivar login por formulario
+            .csrf(csrf -> csrf.disable())
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .formLogin(formLogin -> formLogin.disable())
+            .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // H2 console
 
         return http.build();
     }

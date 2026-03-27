@@ -1,0 +1,8 @@
+-- Datos semilla para perfil local (H2)
+-- Se ejecuta automáticamente al arrancar con perfil local
+
+INSERT INTO TODOITEM (DESCRIPTION, CREATION_TS, DONE) VALUES ('Revisar proyecto Spring Boot', CURRENT_TIMESTAMP, false);
+INSERT INTO TODOITEM (DESCRIPTION, CREATION_TS, DONE) VALUES ('Configurar perfil local H2', CURRENT_TIMESTAMP, true);
+INSERT INTO TODOITEM (DESCRIPTION, CREATION_TS, DONE) VALUES ('Probar endpoints CRUD', CURRENT_TIMESTAMP, false);
+INSERT INTO TODOITEM (DESCRIPTION, CREATION_TS, DONE) VALUES ('Documentar evidencia del CRUD', CURRENT_TIMESTAMP, false);
+INSERT INTO TODOITEM (DESCRIPTION, CREATION_TS, DONE) VALUES ('Preparar entrega final', CURRENT_TIMESTAMP, false);
